@@ -10,7 +10,7 @@ public class DBConnectionTest {
         String name = "dev";
         String pwd = "dev";
 
-        String string = "kevin1986";
+        String string = "kevin1990";
         String hashedString = Hashing.sha256().hashString(string, StandardCharsets.UTF_8).toString();
         System.out.println(hashedString);
         System.out.println(Hashing.sha256().hashString(string, StandardCharsets.UTF_8).toString());
