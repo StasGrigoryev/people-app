@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+    <p>The list of users</p>
+    <div th:each="user : ${users}">
+        <a th:href="@{users/{id}(id=${person.getId()})}"
+           th:text="${user.getFirstName() + ' ' + user.getLastName}">user</a>
+    </div>
+</body>
+</html>
