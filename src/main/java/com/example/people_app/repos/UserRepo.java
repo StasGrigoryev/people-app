@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserRepo {
     boolean save(User user);
-    User findUser();
+    User findUser(int id);
     List<User> findAll();
-    boolean isExist(String email, String password);
+    boolean isExist(String email, String passwordHash);
 }
