@@ -9,4 +9,5 @@ public interface UserRepo {
     User findUser(int id);
     List<User> findAll();
     boolean isExist(String email, String passwordHash);
+    boolean isExist(String email);
 }

@@ -13,7 +13,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.getServletContext().getRequestDispatcher("/views/home.html").forward(req, resp);
-//        req.getRequestDispatcher("/views/home.html").forward(req, resp);
     }
 
     @Override

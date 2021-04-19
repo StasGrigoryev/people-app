@@ -24,6 +24,7 @@ public class DataSourceFactory {
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         String pathToProperties = Objects.requireNonNull(Thread.currentThread().getContextClassLoader()
         .getResource("database.properties")).getPath();
+        System.out.println(pathToProperties);
         InputStream inputStream = null;
 
         try {
@@ -31,7 +32,6 @@ public class DataSourceFactory {
             Properties properties = new Properties();
             properties.load(inputStream);
 
-            //("jdbc:postgresql://localhost:5432/people");
             final String SERVER_NAME = properties.getProperty("serverName");
             final String DB_NAME = properties.getProperty("databaseName");
             final String PORT = properties.getProperty("port");

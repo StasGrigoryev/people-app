@@ -31,31 +31,25 @@ public class UserRepoImpl implements UserRepo {
         Connection connection = null;
         try {
             connection = DataSourceFactory.getConnection();
-            String SQL = "INSERT INTO users(firstname, lastname, email, password_hash, phone_number) " +
+            String SQL = "INSERT INTO users(firstname, lastname, email, phone_number, password_hash) " +
                     "values(?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(SQL);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPasswordHash());
-            ps.setString(5, user.getFirstName());
+            ps.setString(4, user.getPhoneNumber());
+            ps.setString(5, user.getPasswordHash());
 
             return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            try {
-                if (connection != null) {
-                    connection.rollback();
-                }
-            } catch (SQLException ex) {
-                LOGGER.log(Level.FATAL, "Rollback failed", ex);
-            }
             LOGGER.log(Level.FATAL, "SQL Exception", e);
         }
         finally {
             try {
                 if (connection != null) {
                     connection.close();
+                    LOGGER.log(Level.INFO, "Connection closed");
                 }
             } catch (SQLException exc) {
                 LOGGER.log(Level.FATAL, "Failed to close connection", exc);
@@ -92,6 +86,7 @@ public class UserRepoImpl implements UserRepo {
             try {
                 if (connection != null) {
                     connection.close();
+                    LOGGER.log(Level.INFO, "Connection closed");
                 }
             } catch (SQLException exc) {
                 LOGGER.log(Level.FATAL, "Failed to close connection", exc);
@@ -130,6 +125,7 @@ public class UserRepoImpl implements UserRepo {
             try {
                 if (connection != null) {
                     connection.close();
+                    LOGGER.log(Level.INFO, "Connection closed");
                 }
             } catch (SQLException exc) {
                 LOGGER.log(Level.FATAL, "Failed to close connection", exc);
@@ -144,5 +140,13 @@ public class UserRepoImpl implements UserRepo {
 
         return null != users.stream().filter(user -> user.getEmail().equals(email)
         && user.getPasswordHash().equals(passwordHash)).findAny().orElse(null);
+    }
+
+    @Override
+    public boolean isExist(String email) {
+        List<User> users = findAll();
+
+        return null != users.stream().filter(user -> user.getEmail().equals(email))
+                .findAny().orElse(null);
     }
 }
